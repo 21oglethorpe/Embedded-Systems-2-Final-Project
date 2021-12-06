@@ -78,11 +78,15 @@ void DemoRun() {
    OLEDrgb_PutString(&oledrgb, "Demo");
    OLEDrgb_PutChar(&oledrgb, 0);
 
-   sleep(5); // Wait 5 seconds
-
-OLEDrgb_DrawLine(&oledrgb, 0, 16, 80, 16, u16 lineColor);
-  OLEDrgb_DrawLine(&oledrgb, 16, 32, 95, 32, u16 lineColor);
-  OLEDrgb_DrawLine(&oledrgb, 0, 48, 80, 48, u16 lineColor);
+      sleep(2); // Wait 5 seconds
+   OLEDrgb_Clear(&oledrgb);
+   sleep(2);
+   for(int i =0; i < 64; i++){
+	   OLEDrgb_DrawLine(&oledrgb, 0, i, 95, i, 0xFFFF);
+   }
+  OLEDrgb_DrawLine(&oledrgb, 0, 16, 80, 16, 0x07e0);
+  OLEDrgb_DrawLine(&oledrgb, 16, 32, 95, 32, 0x07e0);
+  OLEDrgb_DrawLine(&oledrgb, 0, 48, 80, 48, 0x07e0);
 }
 
 void DemoCleanup() {
