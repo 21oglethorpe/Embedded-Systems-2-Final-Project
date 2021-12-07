@@ -32,25 +32,29 @@ int main(void) {
    return 0;
 }
 void move(int dir, int *col, int *row) {
-   usleep(250000);
+   usleep(500);
  //add collision test here
   OLEDrgb_DrawPixel(&oledrgb, *col , *row, 0);
  switch(dir){
  case 1: //n
      (*row)--;
+     break;
  case 2: //e
      (*col)++;
+     break;
  case 3: //s
      (*row)++;
+     break;
  case 4: //w
      (*col)--;
+     break;
  }
  OLEDrgb_DrawPixel(&oledrgb, *col , *row, 0x07e0);
 }
 
 int within_neg( int16_t numb)
 {
- if((int) numb < 0xEFFF && (int) numb > 0x8000) //must be below threshhold and negative
+ if((u16) numb < 0xEFFF && (u16) numb >= 0x8000) //must be below threshhold and negative
    return 1;
    else
    return 0;
@@ -58,7 +62,7 @@ int within_neg( int16_t numb)
 
 int within_pos( int16_t numb)
 {
- if((int) numb > 0x1000 && (int) numb < 0x7FFF) //must not be negative and over threshhold
+ if((int) numb > 0x1000 && (int) numb < 0x8000) //must not be negative and over threshhold
    return 1;
    else
    return 0;
@@ -66,7 +70,7 @@ int within_pos( int16_t numb)
 
 int is_stable( int16_t numb)
 {
- if((int) numb < 0x1000 || (int) numb > 0x7FFF) //stable is within 0x1000
+ if((u16) numb < 0x1000 || (u16) numb > 0xF000) //stable is within 0x1000
    return 1;
    else
    return 0;
@@ -163,32 +167,39 @@ void DemoRun() {
 
          xil_printf("Temperature: %d deg F\n\r", temp);
          //moving oepration
-
+         if(!(is_stable(xAxis))&& is_stable(yAxis)){
          if(within_neg(xAxis)) //east
               {
-                if(w ==1) w = 0;
+                if(w !=0) w = 0;
                 else e = 1;
               }
              else if(within_pos(xAxis)) //west
              {
-               if(e ==1) e = 0;
+               if(e !=0) e = 0;
                 else w = 1;
              }
              if(within_neg(yAxis)) //north
               {
-                if(s ==1) s = 0;
+                if(s !=0) s = 0;
                 else n = 1;
               }
              else if(within_pos(yAxis)) //south
              {
-               if(n ==1) n = 0;
+               if(n !=0) n = 0;
                 else s = 1;
              }
-             if(n) move(1, &playerc, &playerr);
-             else if(e) move(2, &playerc, &playerr);
-             else if(s) move(3, &playerc, &playerr);
-             else if(w) move(4, &playerc, &playerr);
+         }
 
+             if(n==1) {move(1, &playerc, &playerr);}
+
+             else if(s==1){ move(3, &playerc, &playerr);}
+              if(w==1) { move(4, &playerc, &playerr);}
+              else if(e==1){ move(2, &playerc, &playerr);}
+              xil_printf("%d\n", n);
+              xil_printf("%d\n", e);
+              xil_printf("%d\n", s);
+              xil_printf("%d\n", w);
+              xil_printf("\n");
       }
    }
 }
