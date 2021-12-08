@@ -95,7 +95,6 @@ void DemoInitialize() {
 void DemoRun() {
    char ch;
    int playerc, playerr = 8;
-   int n, e, s, w =0;
    // Define the user definable characters
    for (ch = 0; ch < 5; ch++) {
       OLEDrgb_DefUserChar(&oledrgb, ch, &rgbUserFont[ch * 8]);
@@ -136,6 +135,8 @@ void DemoRun() {
    int trig = 0;
 
    print("Starting...\n\r");
+      int n, e, s, w =0;
+
    while (1) {
       usleep(500000);
 
@@ -167,7 +168,7 @@ void DemoRun() {
 
          xil_printf("Temperature: %d deg F\n\r", temp);
          //moving oepration
-         if(!(is_stable(xAxis))&& is_stable(yAxis)){
+         if(!(is_stable(xAxis)&& is_stable(yAxis))){
          if(within_neg(xAxis)) //east
               {
                 if(w !=0) w = 0;
