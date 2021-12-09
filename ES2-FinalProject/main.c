@@ -183,9 +183,9 @@ void DemoRun() {
    int trig = 0;
 
    print("Starting...\n\r");
-   int n, e, s, w =0;
+   int n, e, s, w, lose =0;
    while (!(playerc >=0 && playerc <16 && playerr>49 && playerr <64)) {
-      usleep(1000);
+      usleep(25000);
 
       if (GYRO_Int1Status(&myDevice) != 0) {
          xil_printf("\x1B[2J");
@@ -238,10 +238,10 @@ void DemoRun() {
              }
          }
 
-             if(n==1 && !collision(playerc, playerr-1) && !collision(playerc+1, playerr-1)) {move(1, &playerc, &playerr);}
-             else if(s==1&& !collision(playerc, playerr+2) &&!collision(playerc+1, playerr+2) ){ move(3, &playerc, &playerr);}
-              if(w==1 && !collision(playerc-1, playerr) && !collision(playerc-1, playerr+1)) { move(4, &playerc, &playerr);}
-              else if(e==1 && !collision(playerc+2, playerr) && !collision(playerc+2, playerr+1)){ move(2, &playerc, &playerr);}
+             if(n==1 ) {move(1, &playerc, &playerr);}
+             else if(s==1 ){ move(3, &playerc, &playerr);}
+              if(w==1) { move(4, &playerc, &playerr);}
+              else if(e==1){ move(2, &playerc, &playerr);}
               xil_printf("%d\n", n);
               xil_printf("%d\n", e);
               xil_printf("%d\n", s);
@@ -249,11 +249,19 @@ void DemoRun() {
               xil_printf("%d\n", playerc);
               xil_printf("%d\n", playerr);
               xil_printf("\n");
+              if(collision(playerc, playerr))
+              {
+            	  lose =1;
+            	  break;
+              }
       }
    }
    OLEDrgb_Clear(&oledrgb);
    OLEDrgb_SetCursor(&oledrgb, 3, 1);
+   if (!lose)
       OLEDrgb_PutString(&oledrgb, "YOU WIN!"); // Default color (green)
+   else
+	   OLEDrgb_PutString(&oledrgb, "YOU LOSE!");
 
 }
 
