@@ -240,14 +240,14 @@ void DemoRun() {
 
              if(n==1 ) {move(1, &playerc, &playerr);}
              else if(s==1 ){ move(3, &playerc, &playerr);}
-              else if(w==1) { move(4, &playerc, &playerr);}
+             else if(w==1) { move(4, &playerc, &playerr);}
               else if(e==1){ move(2, &playerc, &playerr);}
-              xil_printf("%d\n", n);
-              xil_printf("%d\n", e);
-              xil_printf("%d\n", s);
-              xil_printf("%d\n", w);
-              xil_printf("%d\n", playerc);
-              xil_printf("%d\n", playerr);
+              xil_printf("North: %d\n", n);
+              xil_printf("East: %d\n", e);
+              xil_printf("South: %d\n", s);
+              xil_printf("West: %d\n", w);
+              xil_printf("Col: %d\n", playerc);
+              xil_printf("Row: %d\n", playerr);
               xil_printf("\n");
               if(collision(playerc, playerr))
               {
