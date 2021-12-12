@@ -240,7 +240,7 @@ void DemoRun() {
 
              if(n==1 ) {move(1, &playerc, &playerr);}
              else if(s==1 ){ move(3, &playerc, &playerr);}
-              if(w==1) { move(4, &playerc, &playerr);}
+              else if(w==1) { move(4, &playerc, &playerr);}
               else if(e==1){ move(2, &playerc, &playerr);}
               xil_printf("%d\n", n);
               xil_printf("%d\n", e);
